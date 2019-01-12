@@ -16,6 +16,7 @@ Teammate.prototype.printInfo = function() {
 var count = 0;
 
 var teammateArray = [];
+var subArray = [];
 
 var teamInput = function() {
    if (count < 3) {
@@ -42,16 +43,56 @@ var teamInput = function() {
                answers.offense,
                answers.defense);
 
-           teammateArray.push(newTeammate);
-           count++;
-           teamInput();
+               count++;
+           if (count > 2) {
+               subArray.push(newTeammate);
+               teamInput();
+           } else {
+               teammateArray.push(newTeammate);
+               teamInput();
+           }
+           
+        //    teamInput();
        });
    }
    else {
        for (var i = 0; i < teammateArray.length; i++) {
            teammateArray[i].printInfo();
        }
+        console.log("Sub: " + subArray);
+        playGame();
    }
+   
 };
 
 teamInput();
+
+var ranAtk;
+var ranDef;
+
+var score = 0;
+
+
+function playGame() {
+    for (i=0; i < 5; i++) {
+        console.log("Played Game");
+        ranAtk = Math.floor(Math.random() * 20) + 1;
+        ranDef = Math.floor(Math.random() * 20) + 1;
+        console.log(ranAtk, ranDef);
+        var offense = parseInt(teammateArray[0].offense) + parseInt(teammateArray[1].offense);
+        var defense = parseInt(teammateArray[0].defense) + parseInt(teammateArray[1].defense);
+        console.log(offense);
+
+        if (ranAtk < offense) {
+            console.log("You won a point");
+            score++;
+        }
+        if (ranDef > defense) {
+            console.log("You lost a point");
+            score--;
+        }
+
+        console.log(score);
+    }
+};
+
